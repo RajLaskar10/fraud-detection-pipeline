@@ -1,0 +1,21 @@
+# Raw and processed data (keep .gitkeep so dirs exist in repo)
+data/raw/*
+!data/raw/.gitkeep
+data/processed/*
+!data/processed/.gitkeep
+
+# Model files
+*.pkl
+
+# Environment
+.env
+
+# Python
+__pycache__/
+*.pyc
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Project spec (not part of deliverable)
+antigravity-fraud-detection.md

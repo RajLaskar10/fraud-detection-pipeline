@@ -1,5 +1,5 @@
 """
-Load test results into PostgreSQL for Power BI consumption.
+Load test results into Supabase for Streamlit and Power BI consumption.
 
 Reads the test data and both trained models, generates prediction scores
 and binary flags, then bulk-inserts everything into the transactions table.
@@ -10,6 +10,9 @@ import pickle
 import pandas as pd
 import psycopg2
 from psycopg2.extras import execute_values
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # ---------- threshold ----------
 # Adjust this after reviewing the evaluate.py threshold table.
@@ -62,7 +65,7 @@ def main():
         "lr_flagged",
         "rf_flagged",
     ]
-    rows = [tuple(row) for row in df[cols].values]
+    rows = [tuple(row) for row in df[cols].values.tolist()]
 
     # Insert into PostgreSQL
     insert_sql = """
@@ -73,7 +76,7 @@ def main():
         ) VALUES %s
     """
 
-    conn = psycopg2.connect(**DB_CONFIG)
+    conn = psycopg2.connect(**DB_CONFIG, sslmode="require")
     try:
         with conn.cursor() as cur:
             execute_values(cur, insert_sql, rows, page_size=5000)

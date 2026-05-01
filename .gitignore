@@ -4,8 +4,10 @@ data/raw/*
 data/processed/*
 !data/processed/.gitkeep
 
-# Model files
+# Model files (exclude large intermediates but allow the trained models)
 *.pkl
+!data/processed/lr_model.pkl
+!data/processed/rf_model.pkl
 
 # Environment
 .env
@@ -19,3 +21,7 @@ __pycache__/
 
 # Project spec (not part of deliverable)
 antigravity-fraud-detection.md
+
+# Claude Code internal files
+CLAUDE.md
+.mcp.json

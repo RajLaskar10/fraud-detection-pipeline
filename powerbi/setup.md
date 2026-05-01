@@ -1,14 +1,23 @@
 # Power BI Setup
 
-## Connect to PostgreSQL
+## Connect to Supabase (PostgreSQL)
+
+The pipeline uses Supabase as its database. Power BI connects to it via the standard PostgreSQL connector.
 
 1. Open Power BI Desktop
 2. Click **Get Data → Database → PostgreSQL Database**
 3. Enter connection details:
-   - Server: `localhost` (or your DB host)
-   - Database: `fraud`
-4. Select the `transactions` table and the `daily_summary` view
-5. Click **Load**
+   - Server: `db.arbsdutqighucyfizmds.supabase.co`
+   - Database: `postgres`
+4. When prompted for credentials, use:
+   - User: `postgres`
+   - Password: your Supabase database password (Settings → Database in Supabase dashboard)
+5. Select the `transactions` table and the `daily_summary` view
+6. Click **Load**
+
+**Notes:**
+- Power BI connects on port 5432 (direct connection). If your network blocks 5432, use the session pooler on port 5432 at `aws-0-us-east-1.pooler.supabase.com` instead.
+- The Supabase free tier has 60 concurrent connection limit. Close Power BI when not actively using it to free connections for the Streamlit app.
 
 ---
 

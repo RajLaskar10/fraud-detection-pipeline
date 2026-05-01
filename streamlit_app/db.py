@@ -6,19 +6,33 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-DB_CONFIG = {
-    "host": os.getenv("DB_HOST"),
-    "port": os.getenv("DB_PORT", "5432"),
-    "dbname": os.getenv("DB_NAME", "postgres"),
-    "user": os.getenv("DB_USER", "postgres"),
-    "password": os.getenv("DB_PASSWORD"),
-    "sslmode": "require",
-}
+
+def _db_config():
+    try:
+        # Streamlit Cloud: read from st.secrets
+        return {
+            "host": st.secrets["DB_HOST"],
+            "port": st.secrets.get("DB_PORT", "5432"),
+            "dbname": st.secrets.get("DB_NAME", "postgres"),
+            "user": st.secrets.get("DB_USER", "postgres"),
+            "password": st.secrets["DB_PASSWORD"],
+            "sslmode": "require",
+        }
+    except Exception:
+        # Local dev: fall back to env vars / .env file
+        return {
+            "host": os.getenv("DB_HOST"),
+            "port": os.getenv("DB_PORT", "5432"),
+            "dbname": os.getenv("DB_NAME", "postgres"),
+            "user": os.getenv("DB_USER", "postgres"),
+            "password": os.getenv("DB_PASSWORD"),
+            "sslmode": "require",
+        }
 
 
 @st.cache_resource
 def get_connection():
-    return psycopg2.connect(**DB_CONFIG)
+    return psycopg2.connect(**_db_config())
 
 
 def query(sql, params=None):

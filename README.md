@@ -4,7 +4,7 @@ End-to-end machine learning pipeline for detecting fraudulent credit card transa
 
 Most fraud detection projects stop at model accuracy. This one goes further: it frames output around business decisions — the cost of missing real fraud vs. the cost of false alarms — and includes threshold tuning, a Supabase storage layer, and a live Streamlit dashboard designed for compliance analyst review.
 
-**Live dashboard:** [fraud-detection-pipeline.streamlit.app](https://fraud-detection-pipeline.streamlit.app) *(deploy link — update after Streamlit Cloud setup)*
+**Live dashboard:** [fraud-detection-pipeline.streamlit.app](https://fraud-detection-pipeline-acpudkthguql6gq3jsrepq.streamlit.app)
 
 ![Dashboard Overview](docs/assets/dashboard-overview.png)
 
